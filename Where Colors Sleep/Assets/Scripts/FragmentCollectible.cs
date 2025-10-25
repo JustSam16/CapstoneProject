@@ -2,16 +2,13 @@ using UnityEngine;
 
 public class FragmentCollectible : MonoBehaviour
 {
-    private bool collected;
-
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (collected) return;
         if (!other.CompareTag("Player")) return;
 
-        collected = true;
+        if (UIManager.instance != null)
+            UIManager.instance.AddFragment();
 
-        GameManager.instance.AddFragment();
         Destroy(gameObject);
     }
 }

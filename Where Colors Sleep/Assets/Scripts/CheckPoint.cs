@@ -2,25 +2,14 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
-    private bool activated;
-    private Animator animator;
-
-    void Start()
-    {
-        animator = GetComponent<Animator>();
-    }
+    private bool activated = false;
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (activated) return;
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !activated)
         {
+            other.GetComponent<PlayerRespawn>().SetCheckpoint(transform.position);
             activated = true;
-            GameManager.instance.SetCheckpoint(transform.position);
-
-            if (animator != null)
-                animator.SetTrigger("Activate");
-
             Debug.Log("Checkpoint attivato!");
         }
     }

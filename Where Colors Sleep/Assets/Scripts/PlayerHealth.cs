@@ -1,35 +1,51 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 3;
     private int currentHealth;
+    private PlayerRespawn respawn;
 
     void Start()
     {
         currentHealth = maxHealth;
+        respawn = GetComponent<PlayerRespawn>();
+        StartCoroutine(InitializeUI());
+    }
+
+    private IEnumerator InitializeUI()
+    {
+        yield return null; // aspetta un frame per sicurezza
+        if (UIManager.instance != null)
+            UIManager.instance.UpdateLives(currentHealth);
     }
 
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
-        Debug.Log("Vita: " + currentHealth);
 
         if (currentHealth <= 0)
-        {
-            Respawn();
-        }
+            Die();
+
+        if (UIManager.instance != null)
+            UIManager.instance.UpdateLives(currentHealth);
     }
 
-    void Respawn()
+    public void ResetHealth()
     {
         currentHealth = maxHealth;
+        if (UIManager.instance != null)
+            UIManager.instance.UpdateLives(currentHealth);
+    }
 
-        if (GameManager.instance.HasCheckpoint())
-            transform.position = GameManager.instance.GetCheckpointPosition();
+    void Die()
+    {
+        Debug.Log("Player morto!");
+
+        if (respawn != null)
+            respawn.Respawn();
         else
-            transform.position = Vector3.zero; 
-
-        Debug.Log("Respawn avvenuto");
+            Debug.LogWarning("PlayerRespawn non trovato sul Player!");
     }
 }
