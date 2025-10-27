@@ -16,7 +16,7 @@ public class PlayerHealth : MonoBehaviour
 
     private IEnumerator InitializeUI()
     {
-        yield return null; // aspetta un frame per sicurezza
+        yield return null;
         if (UIManager.instance != null)
             UIManager.instance.UpdateLives(currentHealth);
     }
@@ -25,11 +25,17 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth -= amount;
 
-        if (currentHealth <= 0)
-            Die();
+        
+        if (TryGetComponent(out PlayerAnimationController anim))
+            anim.PlayHurt();
 
+        
         if (UIManager.instance != null)
             UIManager.instance.UpdateLives(currentHealth);
+
+        
+        if (currentHealth <= 0)
+            Die();
     }
 
     public void ResetHealth()
@@ -42,7 +48,6 @@ public class PlayerHealth : MonoBehaviour
     void Die()
     {
         Debug.Log("Player morto!");
-
         if (respawn != null)
             respawn.Respawn();
         else

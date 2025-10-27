@@ -16,4 +16,9 @@ public class PlayerAnimationController : MonoBehaviour
         animator.SetBool("isWalking", player.GetIsWalking());
         animator.SetBool("isJumping", !player.GetIsGrounded());
     }
+
+    public void PlayHurt()
+    {
+        animator.SetTrigger("Hurt");
+    }
 }
