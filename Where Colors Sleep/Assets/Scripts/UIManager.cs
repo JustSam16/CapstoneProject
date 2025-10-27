@@ -16,13 +16,23 @@ public class UIManager : MonoBehaviour
     public TMP_Text fragmentsText;
     public TMP_Text coinsText;
 
+    [Header("Impostazioni livello")]
+    [Tooltip("Numero totale di frammenti da raccogliere in questo livello")]
+    public int totalFragments = 5; 
+
     private int fragments;
-    private int totalFragments = 5;
     private int coins;
 
     void Awake()
     {
         instance = this;
+    }
+
+    void Start()
+    {
+        
+        if (fragmentsText != null)
+            fragmentsText.text = "0 / " + totalFragments;
     }
 
     

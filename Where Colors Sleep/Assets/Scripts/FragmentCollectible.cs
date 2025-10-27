@@ -9,6 +9,9 @@ public class FragmentCollectible : MonoBehaviour
         if (UIManager.instance != null)
             UIManager.instance.AddFragment();
 
+        if (LevelManager.instance != null)
+            LevelManager.instance.FragmentCollected();
+
         Destroy(gameObject);
     }
 }
