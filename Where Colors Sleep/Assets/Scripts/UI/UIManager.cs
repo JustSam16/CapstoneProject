@@ -6,19 +6,15 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
-    [Header("Vita (cuori)")]
     public Image[] hearts;
     public Sprite fullHeart;
     public Sprite halfHeart;
     public Sprite emptyHeart;
 
-    [Header("Frammenti e Monete")]
     public TMP_Text fragmentsText;
     public TMP_Text coinsText;
 
-    [Header("Impostazioni livello")]
-    [Tooltip("Numero totale di frammenti da raccogliere in questo livello")]
-    public int totalFragments = 5; 
+    public int totalFragments = 5;
 
     private int fragments;
     private int coins;
@@ -30,12 +26,15 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        
+        coins = PlayerPrefs.GetInt("Monete", 0);
+
         if (fragmentsText != null)
             fragmentsText.text = "0 / " + totalFragments;
+
+        if (coinsText != null)
+            coinsText.text = "x " + coins;
     }
 
-    
     public void UpdateLives(int currentHealth)
     {
         for (int i = 0; i < hearts.Length; i++)
@@ -49,7 +48,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    
     public void AddFragment()
     {
         fragments++;
@@ -57,10 +55,10 @@ public class UIManager : MonoBehaviour
             fragmentsText.text = fragments + " / " + totalFragments;
     }
 
-    
     public void AddCoin()
     {
         coins++;
+        PlayerPrefs.SetInt("Monete", coins);
         if (coinsText != null)
             coinsText.text = "x " + coins;
     }
