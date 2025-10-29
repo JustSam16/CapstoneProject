@@ -1,16 +1,29 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Checkpoint : MonoBehaviour
+public class CheckPoint : MonoBehaviour
 {
     private bool activated = false;
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.CompareTag("Player") && !activated)
+        if (activated) return;
+
+        if (collision.CompareTag("Player"))
         {
-            other.GetComponent<PlayerRespawn>().SetCheckpoint(transform.position);
             activated = true;
-            Debug.Log("Checkpoint attivato!");
+            PlayerRespawn playerRespawn = collision.GetComponent<PlayerRespawn>();
+
+            if (playerRespawn != null)
+            {
+                playerRespawn.UpdateCheckpoint(transform.position);
+            }
+
+            
+            UIMessageManager ui = FindObjectOfType<UIMessageManager>();
+            if (ui != null)
+                ui.ShowCheckpointMessage();
+
+            Debug.Log("✅ Checkpoint raggiunto!");
         }
     }
 }

@@ -30,7 +30,7 @@ public class EnemyBase : MonoBehaviour
 
         Collider2D playerHit = Physics2D.OverlapCircle(topCheck.position, topCheckRadius, playerLayer);
 
-        // ✅ se non trova niente o non è il player, ignora
+        
         if (playerHit == null) return;
         if (!playerHit.CompareTag("Player")) return;
 

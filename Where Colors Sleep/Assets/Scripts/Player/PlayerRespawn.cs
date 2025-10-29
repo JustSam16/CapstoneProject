@@ -1,26 +1,24 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerRespawn : MonoBehaviour
 {
-    private Vector2 respawnPoint;
-    private PlayerHealth playerHealth;
+    private Vector2 currentCheckpoint;
+    private Rigidbody2D rb;
 
     void Start()
     {
-        playerHealth = GetComponent<PlayerHealth>();
-        respawnPoint = transform.position; 
+        rb = GetComponent<Rigidbody2D>();
+        currentCheckpoint = transform.position;
     }
 
-    public void SetCheckpoint(Vector2 newPosition)
+    public void UpdateCheckpoint(Vector2 newCheckpoint)
     {
-        respawnPoint = newPosition;
-        Debug.Log("Nuovo checkpoint impostato: " + respawnPoint);
+        currentCheckpoint = newCheckpoint;
     }
 
     public void Respawn()
     {
-        transform.position = respawnPoint;
-        playerHealth.ResetHealth();
-        Debug.Log("Player respawnato a " + respawnPoint);
+        transform.position = currentCheckpoint;
+        if (rb != null) rb.velocity = Vector2.zero;
     }
 }
