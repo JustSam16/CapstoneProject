@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Water
   layers:
   - Default
   - TransparentFX
@@ -14,7 +15,7 @@ TagManager:
   - Ground
   - Player
   - Enemy
-  - 
+  - Obstacles
   - 
   - 
   - 
@@ -52,4 +53,7 @@ TagManager:
     locked: 0
   - name: Enemies
     uniqueID: 2705896687
+    locked: 0
+  - name: Environment
+    uniqueID: 1393224779
     locked: 0
