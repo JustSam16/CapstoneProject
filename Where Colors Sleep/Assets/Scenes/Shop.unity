@@ -791,7 +791,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Comprare
 
-    (10 monete)'
+    (5 monete)'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e26b8b50f450ab64bbe2e9c5a0abc03d, type: 2}
   m_sharedMaterial: {fileID: 5175738547864543249, guid: e26b8b50f450ab64bbe2e9c5a0abc03d, type: 2}
@@ -2157,7 +2157,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06badf4fbc38ad6448b2ce0cdbe26e62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: TestAbilities
 --- !u!114 &1944013030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2170,9 +2169,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10d0df842cc94c54f9057df92e870c8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crystalsText: {fileID: 1450110045}
   crouchButton: {fileID: 1689844386}
   swimButton: {fileID: 735026326}
+  coinsText: {fileID: 1450110045}
+  crouchCost: 25
+  swimCost: 40
 --- !u!1 &1973446069
 GameObject:
   m_ObjectHideFlags: 0

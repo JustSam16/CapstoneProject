@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class LevelEndTrigger : MonoBehaviour
 {
     private bool levelCompleted = false;
-    public float delayBeforeShop = 2f;
+    public float delayBeforeNextScene = 2f;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -18,15 +17,23 @@ public class LevelEndTrigger : MonoBehaviour
             if (ui != null)
                 ui.ShowLevelCompleteMessage();
 
-            Debug.Log("🏁 Livello completato! Transizione in corso...");
+            Debug.Log("Livello completato! Transizione in corso...");
 
-            Invoke(nameof(LoadShop), delayBeforeShop);
+            Invoke(nameof(LoadNextScene), delayBeforeNextScene);
         }
     }
 
-    void LoadShop()
+    void LoadNextScene()
     {
-        SceneManager.LoadScene("Shop");
+        SceneLoader loader = FindObjectOfType<SceneLoader>();
+        if (loader != null)
+        {
+            loader.LoadNextScene();
+        }
+        else
+        {
+            Debug.LogWarning("Nessun SceneLoader trovato nella scena, caricamento manuale Shop...");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Shop");
+        }
     }
 }
-
