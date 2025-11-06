@@ -9,31 +9,28 @@ public class ShopManager : MonoBehaviour
     public Button swimButton;
     public TextMeshProUGUI coinsText;
 
-    public int crouchCost = 5;
-    public int swimCost = 5;
+    const int crouchCost = 5;
+    const int swimCost = 5;
 
     int coins;
     bool crouchUnlocked;
     bool swimUnlocked;
 
-    void Start()
+    void OnEnable()
     {
-        StartCoroutine(ForceEverything());
+        StartCoroutine(InitShop());
     }
 
-    IEnumerator ForceEverything()
+    IEnumerator InitShop()
     {
-        
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
 
         coins = PlayerPrefs.GetInt("Coins", 0);
+        Debug.Log("MONETE LETTE DALLO SHOP: " + coins);
+
         crouchUnlocked = PlayerPrefs.GetInt("CrouchUnlocked", 0) == 1;
         swimUnlocked = PlayerPrefs.GetInt("SwimUnlocked", 0) == 1;
 
-        RefreshUI();
-
-        
-        yield return new WaitForSeconds(2f);
         RefreshUI();
     }
 
@@ -46,6 +43,7 @@ public class ShopManager : MonoBehaviour
         PlayerPrefs.SetInt("Coins", coins);
         PlayerPrefs.SetInt("CrouchUnlocked", 1);
         PlayerPrefs.Save();
+
         crouchUnlocked = true;
         RefreshUI();
     }
@@ -59,6 +57,7 @@ public class ShopManager : MonoBehaviour
         PlayerPrefs.SetInt("Coins", coins);
         PlayerPrefs.SetInt("SwimUnlocked", 1);
         PlayerPrefs.Save();
+
         swimUnlocked = true;
         RefreshUI();
     }

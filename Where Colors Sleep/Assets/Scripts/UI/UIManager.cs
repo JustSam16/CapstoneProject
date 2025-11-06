@@ -17,7 +17,6 @@ public class UIManager : MonoBehaviour
     public int totalFragments = 5;
 
     private int fragments;
-    private int coins;
 
     void Awake()
     {
@@ -26,7 +25,7 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        coins = PlayerPrefs.GetInt("Monete", 0);
+        int coins = PlayerPrefs.GetInt("Coins", 0);
 
         if (fragmentsText != null)
             fragmentsText.text = "0 / " + totalFragments;
@@ -57,8 +56,7 @@ public class UIManager : MonoBehaviour
 
     public void AddCoin()
     {
-        coins++;
-        PlayerPrefs.SetInt("Monete", coins);
+        int coins = PlayerPrefs.GetInt("Coins", 0);
         if (coinsText != null)
             coinsText.text = "x " + coins;
     }

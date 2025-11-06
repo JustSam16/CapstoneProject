@@ -1,51 +1,52 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using TMPro;
 
 public class LevelSelectManager : MonoBehaviour
 {
     public Button level1Button;
     public Button level2Button;
     public Button level3Button;
-    public TextMeshProUGUI req2Text;
-    public TextMeshProUGUI req3Text;
-    public Image lock2Icon;
-    public Image lock3Icon;
+    public GameObject level2LockIcon;
+    public GameObject level3LockIcon;
 
-    public Sprite closedLockSprite;
-    public Sprite openLockSprite;
-
-    private Color unlockedColor = new Color(0.75f, 0.6f, 0.9f);
-    private Color lockedColor = new Color(0.6f, 0.6f, 0.6f);
-
-    void Start()
+    void OnEnable()
     {
-        
-        level1Button.interactable = true;
-        level2Button.interactable = true;
-        level3Button.interactable = true;
-
-        UpdateButtonVisual(level2Button, req2Text, lock2Icon, true, "Crouch");
-        UpdateButtonVisual(level3Button, req3Text, lock3Icon, true, "Swim");
+        Refresh();
     }
 
-    void UpdateButtonVisual(Button button, TextMeshProUGUI reqText, Image lockIcon, bool unlocked, string abilityName)
+    void Refresh()
     {
-        if (button == null) return;
+        bool crouchUnlocked = PlayerPrefs.GetInt("CrouchUnlocked", 0) == 1;
+        bool swimUnlocked = PlayerPrefs.GetInt("SwimUnlocked", 0) == 1;
 
-        TextMeshProUGUI btnText = button.GetComponentInChildren<TextMeshProUGUI>();
+        if (level1Button != null) level1Button.interactable = true;
+        if (level2Button != null) level2Button.interactable = crouchUnlocked;
+        if (level3Button != null) level3Button.interactable = crouchUnlocked && swimUnlocked;
 
-        button.image.color = unlockedColor;
-        if (btnText != null) btnText.text = "SBLOCCATO";
-        if (reqText != null) reqText.gameObject.SetActive(false);
-
-        if (lockIcon != null && openLockSprite != null)
-            lockIcon.sprite = openLockSprite;
+        if (level2LockIcon != null) level2LockIcon.SetActive(!crouchUnlocked);
+        if (level3LockIcon != null) level3LockIcon.SetActive(!(crouchUnlocked && swimUnlocked));
     }
 
-    public void LoadLevel1() => SceneManager.LoadScene("SampleScene");
-    public void LoadLevel2() => SceneManager.LoadScene("Level2_Cave");
-    public void LoadLevel3() => SceneManager.LoadScene("Level3_UnderWater");
-    public void BackToMenu() => SceneManager.LoadScene("MainMenu");
+    public void LoadLevel1()
+    {
+        SceneManager.LoadScene("SampleScene");
+    }
+
+    public void LoadLevel2()
+    {
+        if (PlayerPrefs.GetInt("CrouchUnlocked", 0) == 1)
+            SceneManager.LoadScene("Level2_Cave");
+    }
+
+    public void LoadLevel3()
+    {
+        if (PlayerPrefs.GetInt("CrouchUnlocked", 0) == 1 && PlayerPrefs.GetInt("SwimUnlocked", 0) == 1)
+            SceneManager.LoadScene("Level3_UnderWater");
+    }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 }

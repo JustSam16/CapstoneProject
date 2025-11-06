@@ -10,32 +10,24 @@ public class ShopNavigation : MonoBehaviour
 
     public void ContinueToNext()
     {
-        string nextScene = "";
+        bool crouchUnlocked = PlayerPrefs.GetInt("CrouchUnlocked", 0) == 1;
+        bool swimUnlocked = PlayerPrefs.GetInt("SwimUnlocked", 0) == 1;
 
-        
-        if (PlayerPrefs.GetInt("CrouchUnlocked", 0) == 0)
+        if (!crouchUnlocked)
+            return;
+
+        if (crouchUnlocked && !swimUnlocked)
         {
-            
-            nextScene = "Level2_Cave";
-        }
-        else if (PlayerPrefs.GetInt("CrouchUnlocked", 0) == 1 && PlayerPrefs.GetInt("SwimUnlocked", 0) == 0)
-        {
-            
-            nextScene = "Level3_UnderWater";
-        }
-        else
-        {
-            
-            nextScene = "MainMenu";
+            SceneManager.LoadScene("Level2_Cave");
+            return;
         }
 
-        if (!string.IsNullOrEmpty(nextScene))
+        if (crouchUnlocked && swimUnlocked)
         {
-            SceneManager.LoadScene(nextScene);
+            SceneManager.LoadScene("Level3_UnderWater");
+            return;
         }
-        else
-        {
-            Debug.LogWarning("Nessuna scena trovata per il prossimo step!");
-        }
+
+        SceneManager.LoadScene("MainMenu");
     }
 }

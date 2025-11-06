@@ -13,11 +13,12 @@ public class LevelEndTrigger : MonoBehaviour
         {
             levelCompleted = true;
 
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.StopMusic();
+
             UIMessageManager ui = FindObjectOfType<UIMessageManager>();
             if (ui != null)
                 ui.ShowLevelCompleteMessage();
-
-            Debug.Log("Livello completato! Transizione in corso...");
 
             Invoke(nameof(LoadNextScene), delayBeforeNextScene);
         }
@@ -25,6 +26,8 @@ public class LevelEndTrigger : MonoBehaviour
 
     void LoadNextScene()
     {
+        PlayerPrefs.Save(); 
+
         SceneLoader loader = FindObjectOfType<SceneLoader>();
         if (loader != null)
         {
@@ -32,7 +35,6 @@ public class LevelEndTrigger : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Nessun SceneLoader trovato nella scena, caricamento manuale Shop...");
             UnityEngine.SceneManagement.SceneManager.LoadScene("Shop");
         }
     }

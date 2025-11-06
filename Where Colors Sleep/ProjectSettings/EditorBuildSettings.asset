@@ -12,12 +12,18 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    path: Assets/Scenes/TestAbilities.unity
-    guid: 003ecb8c16a4cf147976198155991260
-  - enabled: 1
     path: Assets/Scenes/Shop.unity
     guid: 67048fad0cba55a488fd30c19945a67a
   - enabled: 1
     path: Assets/Scenes/LevelSelect.unity
     guid: d43461cbaf4de0e44b7367c92e953a63
+  - enabled: 1
+    path: Assets/Scenes/Level2_Cave.unity
+    guid: e34b6b6a8575b6c468d385c8b28564fe
+  - enabled: 1
+    path: Assets/Scenes/Level3_UnderWater.unity
+    guid: 6a12e5f7bd5a657408c71ad9c18d14ee
+  - enabled: 1
+    path: Assets/Scenes/VictoryMenu.unity
+    guid: 26001b22df4ec6049868d95691ef96b7
   m_configObjects: {}

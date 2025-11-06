@@ -18,6 +18,11 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene("LevelSelect");
     }
 
+    public void LoadShop()
+    {
+        SceneManager.LoadScene("Shop");
+    }
+
     public void LoadNextScene()
     {
         string currentScene = SceneManager.GetActiveScene().name;
@@ -25,20 +30,42 @@ public class SceneLoader : MonoBehaviour
         switch (currentScene)
         {
             case "SampleScene":
-                SceneManager.LoadScene("Level2_Cave");
+                SceneManager.LoadScene("Shop");
                 break;
 
             case "Level2_Cave":
-                SceneManager.LoadScene("Level3_UnderWater");
+                SceneManager.LoadScene("Shop");
                 break;
 
             case "Level3_UnderWater":
-                SceneManager.LoadScene("MainMenu");
+                SceneManager.LoadScene("VictoryMenu");
+                break;
+
+            case "Shop":
+                HandleShopProgression();
                 break;
 
             default:
                 SceneManager.LoadScene("MainMenu");
                 break;
+        }
+    }
+
+    void HandleShopProgression()
+    {
+        bool crouchUnlocked = PlayerPrefs.GetInt("CrouchUnlocked", 0) == 1;
+        bool swimUnlocked = PlayerPrefs.GetInt("SwimUnlocked", 0) == 1;
+
+        if (crouchUnlocked && !swimUnlocked)
+        {
+            SceneManager.LoadScene("Level2_Cave");
+            return;
+        }
+
+        if (crouchUnlocked && swimUnlocked)
+        {
+            SceneManager.LoadScene("Level3_UnderWater");
+            return;
         }
     }
 

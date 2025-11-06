@@ -9,8 +9,9 @@ public class CoinCollectible : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
 
-        int current = PlayerPrefs.GetInt("Monete", 0);
-        PlayerPrefs.SetInt("Monete", current + coinValue);
+        int current = PlayerPrefs.GetInt("Coins", 0);
+        PlayerPrefs.SetInt("Coins", current + coinValue);
+        PlayerPrefs.Save();
 
         if (UIManager.instance != null)
         {
@@ -18,8 +19,8 @@ public class CoinCollectible : MonoBehaviour
                 UIManager.instance.AddCoin();
         }
 
-        if (pickupSound != null)
-            AudioSource.PlayClipAtPoint(pickupSound, transform.position);
+        if (AudioManager.Instance != null && pickupSound != null)
+            AudioManager.Instance.PlaySFX(pickupSound);
 
         Destroy(gameObject);
     }
